@@ -2,13 +2,13 @@ import React from 'react';
 import {Link} from "react-router-dom";
 import Table from '../common/Table'
 import { getAllPeople } from '../../store/selectors/people';
-import { deletePerson, changeBelovedStatus } from '../../store/actions/people';
+import { deletePerson, changePersonBelovedStatus } from '../../store/actions/people';
 import { connect } from 'react-redux'
 
-const PeoplePage = ({people, dispatchDeletePerson, dispatchChangeBelovedStatus}) => {
+const PeoplePage = ({people, dispatchDeletePerson, dispatchchangePersonBelovedStatus}) => {
     
     const handleBelovedStatus = id => {
-        dispatchChangeBelovedStatus(id);
+        dispatchchangePersonBelovedStatus(id);
     }
 
     const handleDelete = (id) => {
@@ -75,8 +75,8 @@ const mapDispatchToProps = dispatch => {
         dispatchDeletePerson: id => {
             dispatch(deletePerson(id));
         },
-        dispatchChangeBelovedStatus: id => {
-            dispatch(changeBelovedStatus(id));
+        dispatchchangePersonBelovedStatus: id => {
+            dispatch(changePersonBelovedStatus(id));
         }
     }
 }

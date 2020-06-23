@@ -3,14 +3,14 @@ import {Link} from "react-router-dom";
 import Table from '../common/Table'
 import { useSelector, useDispatch } from 'react-redux';
 import { getAllPeople } from '../../store/selectors/people';
-import { deletePerson, changeBelovedStatus } from '../../store/actions/people';
+import { deletePerson, changePersonBelovedStatus } from '../../store/actions/people';
 
 const PeoplePage = () => {
     const dispatch = useDispatch();
     const people = useSelector(state => getAllPeople(state));
 
     const handleBelovedStatus = id => {
-        dispatch(changeBelovedStatus(id));
+        dispatch(changePersonBelovedStatus(id));
     }
 
     const handleDelete = (id) => {
