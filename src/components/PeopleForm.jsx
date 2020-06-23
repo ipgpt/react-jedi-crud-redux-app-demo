@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useSelector, useDispatch} from 'react-redux';
 import Input from "./common/Input";
 import Button from './common/Button';
 import {nanoid} from "nanoid";
-
-
+import {addPerson, editPerson} from '../store/actions/people';
+import { getAllPeople } from '../store/selectors/people';
 import {peopleColumns} from "../services/peopleService";
 
 const initialPersonData = peopleColumns.reduce((columns, columnName) => {
@@ -11,16 +12,21 @@ const initialPersonData = peopleColumns.reduce((columns, columnName) => {
     return columns;
 }, {})
 
-const PeopleForm = ({setPeople, people, history, match}) => {
+const PeopleForm = ({history, match}) => {
+    const dispatch = useDispatch();
+    const people = useSelector(state => getAllPeople(state));
+
     const [formErrors, setFormErrors] = useState({});
     const [personData, setPersonData] = useState({...initialPersonData});
     const [editMode, setEditMode] = useState(false);
 
     useEffect(() => {
         const personId = match.params.id;
-        if (personId === "new") return;
+        if (personId === "new") {
+            return;
+        }
         const existingPersonData = people.find(person => person.id === personId)
-        setPersonData(existingPersonData)
+        setPersonData(existingPersonData);
         setEditMode(true);
     }, [])
 
@@ -44,10 +50,9 @@ const PeopleForm = ({setPeople, people, history, match}) => {
         }
 
         if (editMode) {
-            const newPeopleList = people.map(person => person.id === personData.id ? personData : person);
-            setPeople(newPeopleList)
+            dispatch(editPerson(personData))
         } else {
-            setPeople( people, {...personData, beloved: false, id: nanoid()});
+            dispatch(addPerson({...personData, beloved: false, id: nanoid()}));
         }
         history.push('/')
     }
