@@ -4,7 +4,7 @@ import Table from '../common/Table';
 import { useSelector, useDispatch } from 'react-redux';
 import { getPlanets } from "../../services/planetsService";
 import { getAllPlanets } from '../../store/selectors/planets';
-import { deletePlanet, changePlanetBelovedStatus, setPlanet } from '../../store/actions/planets';
+import { deletePlanet, changePlanetBelovedStatus, setPlanets } from '../../store/actions/planets';
 
 const PlanetsPage = () => {
     const dispatch = useDispatch();
@@ -12,7 +12,7 @@ const PlanetsPage = () => {
     useEffect(() => {
         async function fetchData() {
             const planetsResponse = await getPlanets()
-            dispatch(setPlanet(planetsResponse));
+            dispatch(setPlanets(planetsResponse));
         }
 
         fetchData()
