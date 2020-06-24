@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
-import PeoplePage from "./components/pages/PeoplePage2";
+import PeoplePage from "./components/pages/PeoplePage";
 import PlanetsPage from "./components/pages/PlanetsPage";
 import StarshipsPage from "./components/pages/StarshipsPage";
 import PeopleForm from "./components/PeopleForm";
@@ -18,16 +18,14 @@ import { getStarships } from "./services/starshipsService";
 import { setPeople } from "./store/actions/people";
 import { setPlanets } from "./store/actions/planets";
 import { setStarships } from "./store/actions/starships";
-
 // for intro/learning purposes
-const columns = ["First", "Last", "Handle"];
-const data = [
-  { first: "Mark", last: "Otto", handle: "@motto", id: "1" },
-  { first: "Carl", last: "Reno", handle: "@ceno", id: "2" },
-  { first: "Steve", last: "Smith", handle: "@ssteve", id: "3" },
-];
+// const columns = ["First", "Last", "Handle"];
+// const data = [
+//   { first: "Mark", last: "Otto", handle: "@motto", id: "1" },
+//   { first: "Carl", last: "Reno", handle: "@ceno", id: "2" },
+//   { first: "Steve", last: "Smith", handle: "@ssteve", id: "3" },
+// ];
 //
-
 function App() {
   const dispatch = useDispatch();
 
@@ -39,9 +37,20 @@ function App() {
       dispatch(setPeople(peopleResponse));
       dispatch(setPlanets(planetsResponse));
       dispatch(setStarships(starshipsResponse));
+
+      const jquery = document.createElement("script");
+      jquery.src = "https://code.jquery.com/jquery-3.5.1.slim.min.js";
+      jquery.async = true;
+      document.body.appendChild(jquery);
+      
+      const bootstrap = document.createElement("script");
+      bootstrap.src = "https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js";
+      bootstrap.async = true;
+      document.body.appendChild(bootstrap);    
     }
 
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

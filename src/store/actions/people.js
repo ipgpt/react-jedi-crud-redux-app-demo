@@ -1,8 +1,8 @@
-export const SET_PEOPLE = 'SET_PEOPLE'
-export const DELETE_PERSON = 'DELETE_PERSON'
-export const ADD_PERSON = 'ADD_PERSON'
-export const EDIT_PERSON = 'EDIT_PERSON'
-export const CHANGE_PERSON_BELOVED_STATUS = 'CHANGE_PERSON_BELOVED_STATUS'
+export const SET_PEOPLE = "SET_PEOPLE";
+export const DELETE_PERSON = "DELETE_PERSON";
+export const ADD_PERSON = "ADD_PERSON";
+export const EDIT_PERSON = "EDIT_PERSON";
+export const CHANGE_PERSON_BELOVED_STATUS = "CHANGE_PERSON_BELOVED_STATUS";
 
 export function setPeople(people) {
   return { type: SET_PEOPLE, people };
@@ -21,5 +21,5 @@ export function editPerson(updatedPerson) {
 }
 
 export function changePersonBelovedStatus(id) {
-  return { type: CHANGE_PERSON_BELOVED_STATUS, id};
+  return { type: CHANGE_PERSON_BELOVED_STATUS, id };
 }

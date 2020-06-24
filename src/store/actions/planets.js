@@ -1,8 +1,8 @@
-export const SET_PLANETS = 'SET_PLANETS'
-export const DELETE_PLANET = 'DELETE_PLANET'
-export const ADD_PLANET = 'ADD_PLANET'
-export const EDIT_PLANET = 'EDIT_PLANET'
-export const CHANGE_PLANET_BELOVED_STATUS = 'CHANGE_PLANET_BELOVED_STATUS'
+export const SET_PLANETS = "SET_PLANETS";
+export const DELETE_PLANET = "DELETE_PLANET";
+export const ADD_PLANET = "ADD_PLANET";
+export const EDIT_PLANET = "EDIT_PLANET";
+export const CHANGE_PLANET_BELOVED_STATUS = "CHANGE_PLANET_BELOVED_STATUS";
 
 export function setPlanets(planets) {
   return { type: SET_PLANETS, planets };
@@ -21,5 +21,5 @@ export function editPlanet(updatedPlanet) {
 }
 
 export function changePlanetBelovedStatus(id) {
-  return { type: CHANGE_PLANET_BELOVED_STATUS, id};
+  return { type: CHANGE_PLANET_BELOVED_STATUS, id };
 }
