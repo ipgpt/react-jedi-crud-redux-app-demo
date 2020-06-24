@@ -15,7 +15,7 @@ export default function Table({ columns, data, onDelete, tableDescriptor }) {
   }
 
   return (
-    <table className="table table-striped table-dark">
+    <table className="table table-striped table-dark table-responsive-lg">
       <thead>
         <tr>
           <th scope="col">{tableDescriptor}</th>
