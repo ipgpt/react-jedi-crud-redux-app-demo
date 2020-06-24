@@ -1,3 +1,3 @@
-export const getAllPlanets = state => {
+export const getAllPlanets = (state) => {
   return state.planets.allPlanets;
-}
+};

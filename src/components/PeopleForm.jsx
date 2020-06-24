@@ -1,96 +1,99 @@
-import React, {useState, useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Input from "./common/Input";
-import Button from './common/Button';
-import {nanoid} from "nanoid";
-import {addPerson, editPerson} from '../store/actions/people';
-import { getAllPeople } from '../store/selectors/people';
-import {peopleColumns} from "../services/peopleService";
+import Button from "./common/Button";
+import { nanoid } from "nanoid";
+import { addPerson, editPerson } from "../store/actions/people";
+import { getAllPeople } from "../store/selectors/people";
+import { peopleColumns } from "../services/peopleService";
 
 const initialPersonData = peopleColumns.reduce((columns, columnName) => {
-    columns[columnName] = '';
-    return columns;
-}, {})
+  columns[columnName] = "";
+  return columns;
+}, {});
 
-const PeopleForm = ({history, match}) => {
-    const dispatch = useDispatch();
-    const people = useSelector(state => getAllPeople(state));
+const PeopleForm = ({ history, match }) => {
+  const dispatch = useDispatch();
+  const people = useSelector((state) => getAllPeople(state));
 
-    const [formErrors, setFormErrors] = useState({});
-    const [personData, setPersonData] = useState({...initialPersonData});
-    const [editMode, setEditMode] = useState(false);
+  const [formErrors, setFormErrors] = useState({});
+  const [personData, setPersonData] = useState({ ...initialPersonData });
+  const [editMode, setEditMode] = useState(false);
 
-    useEffect(() => {
-        const personId = match.params.id;
-        if (personId === "new") {
-            return;
-        }
-        const existingPersonData = people.find(person => person.id === personId)
-        setPersonData(existingPersonData);
-        setEditMode(true);
-    }, [])
+  useEffect(() => {
+    const personId = match.params.id;
+    if (personId === "new") {
+      return;
+    }
+    const existingPersonData = people.find((person) => person.id === personId);
+    setPersonData(existingPersonData);
+    setEditMode(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    const validate = (data) => { // super simple validation
-        let errors = {};
-        Object.entries(data).map(([propKey, propVal]) => {
-            if (!propVal && !propKey.includes('beloved')) {
-                errors = {...errors, [propKey]: 'Field should not be empty'};
-            }
-        })
-        setFormErrors(errors);
-        return errors
+  const validate = (data) => {
+    // super simple validation
+    let errors = {};
+    // eslint-disable-next-line array-callback-return
+    Object.entries(data).map(([propKey, propVal]) => {
+      if (!propVal && !propKey.includes("beloved")) {
+        errors = { ...errors, [propKey]: "Field should not be empty" };
+      }
+    });
+    setFormErrors(errors);
+    return errors;
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    const errors = validate(personData);
+
+    if (Object.keys(errors).length) {
+      return;
     }
 
-    const onSubmit = (event) => {
-        event.preventDefault();
-        const errors = validate(personData);
+    if (editMode) {
+      dispatch(editPerson(personData));
+    } else {
+      dispatch(addPerson({ ...personData, beloved: false, id: nanoid() }));
+    }
+    history.push("/");
+  };
 
-        if (Object.keys(errors).length) {
-            return;
-        }
-
-        if (editMode) {
-            dispatch(editPerson(personData))
-        } else {
-            dispatch(addPerson({...personData, beloved: false, id: nanoid()}));
-        }
-        history.push('/')
+  const handleChange = (event) => {
+    const { currentTarget: input } = event;
+    const data = { ...personData };
+    const errors = { ...formErrors };
+    if (errors[input.name]) {
+      delete errors[input.name];
     }
 
-    const handleChange = (event) => {
-        const {currentTarget: input} = event;
-        const data = {...personData};
-        const errors = {...formErrors};
-        if (errors[input.name]) {
-            delete errors[input.name];
-        }
+    data[input.name] = input.value;
+    setPersonData(data);
+    setFormErrors(errors);
+  };
 
-        data[input.name] = input.value;
-        setPersonData(data);
-        setFormErrors(errors)
-    }
-
-    return (
-        <form>
-            {peopleColumns.map(peopleColName => (
-                <Input
-                    key={peopleColName}
-                    name={peopleColName}
-                    label={peopleColName[0].toUpperCase() + peopleColName.slice(1)}
-                    value={personData[peopleColName]}
-                    type={peopleColName === 'beloved' ? 'checkbox' : 'input'}
-                    error={formErrors[peopleColName]}
-                    onChange={event => handleChange(event)}
-                />
-            ))}
-            <Button
-                onClick={event => onSubmit(event)}
-                label="Save"
-                disabled={Object.keys(formErrors).length}
-                classes="btn btn-dark"
-            />
-        </form>
-    );
+  return (
+    <form>
+      {peopleColumns.map((peopleColName) => (
+        <Input
+          key={peopleColName}
+          name={peopleColName}
+          label={peopleColName[0].toUpperCase() + peopleColName.slice(1)}
+          value={personData[peopleColName]}
+          type={peopleColName === "beloved" ? "checkbox" : "input"}
+          error={formErrors[peopleColName]}
+          onChange={(event) => handleChange(event)}
+        />
+      ))}
+      <Button
+        onClick={(event) => onSubmit(event)}
+        label="Save"
+        disabled={Object.keys(formErrors).length}
+        classes="btn btn-dark"
+      />
+    </form>
+  );
 };
 
 export default PeopleForm;

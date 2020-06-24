@@ -28,11 +28,13 @@ const PlanetsForm = ({ history, match }) => {
     const existingPlanetData = planets.find((planet) => planet.id === planetId);
     setPlanetData(existingPlanetData);
     setEditMode(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const validate = (data) => {
     // super simple validation
     let errors = {};
+    // eslint-disable-next-line array-callback-return
     Object.entries(data).map(([propKey, propVal]) => {
       if (!propVal && !propKey.includes("beloved")) {
         errors = { ...errors, [propKey]: "Field should not be empty" };

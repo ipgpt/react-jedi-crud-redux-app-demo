@@ -25,14 +25,18 @@ const StarshipsForm = ({ history, match }) => {
     if (starshipId === "new") {
       return;
     }
-    const existingStarshipData = starships.find((starship) => starship.id === starshipId);
+    const existingStarshipData = starships.find(
+      (starship) => starship.id === starshipId
+    );
     setStarshipData(existingStarshipData);
     setEditMode(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const validate = (data) => {
     // super simple validation
     let errors = {};
+    // eslint-disable-next-line array-callback-return
     Object.entries(data).map(([propKey, propVal]) => {
       if (!propVal && !propKey.includes("beloved")) {
         errors = { ...errors, [propKey]: "Field should not be empty" };

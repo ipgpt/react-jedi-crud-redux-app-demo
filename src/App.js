@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
+//import "bootstrap/dist/js/bootstrap";
 import PeoplePage from "./components/pages/PeoplePage2";
 import PlanetsPage from "./components/pages/PlanetsPage";
 import StarshipsPage from "./components/pages/StarshipsPage";
@@ -18,16 +19,14 @@ import { getStarships } from "./services/starshipsService";
 import { setPeople } from "./store/actions/people";
 import { setPlanets } from "./store/actions/planets";
 import { setStarships } from "./store/actions/starships";
-
 // for intro/learning purposes
-const columns = ["First", "Last", "Handle"];
-const data = [
-  { first: "Mark", last: "Otto", handle: "@motto", id: "1" },
-  { first: "Carl", last: "Reno", handle: "@ceno", id: "2" },
-  { first: "Steve", last: "Smith", handle: "@ssteve", id: "3" },
-];
+// const columns = ["First", "Last", "Handle"];
+// const data = [
+//   { first: "Mark", last: "Otto", handle: "@motto", id: "1" },
+//   { first: "Carl", last: "Reno", handle: "@ceno", id: "2" },
+//   { first: "Steve", last: "Smith", handle: "@ssteve", id: "3" },
+// ];
 //
-
 function App() {
   const dispatch = useDispatch();
 
@@ -42,6 +41,7 @@ function App() {
     }
 
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
